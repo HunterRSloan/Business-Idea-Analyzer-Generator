@@ -1,84 +1,122 @@
 # Business Idea Analyzer & Generator
 
-A sophisticated AI-powered tool that helps entrepreneurs and business professionals evaluate and generate business ideas using market analysis, sentiment analysis, and feasibility assessment.
+An AI-powered tool that helps entrepreneurs evaluate and generate business ideas using market analysis, sentiment analysis, and feasibility assessment.
 
-## Description
+## Features
 
-This project combines the power of OpenAI's GPT model, financial market data, and sentiment analysis to provide comprehensive business idea analysis and generation. It helps users:
-
-- Generate innovative business ideas based on industry and target market
-- Assess the feasibility of existing business ideas
-- Analyze market trends and sentiment
-- Evaluate risk levels and market outlook
-- Calculate potential ROI and investment requirements
-
-The tool uses multiple data sources and analysis methods:
-- Market data from financial ETFs
-- News sentiment analysis
-- Industry-specific trend analysis
-- Complexity and competition assessment
-- Scalability evaluation
-
-## Key Features
-
-- **Business Idea Generation**: Creates 5 innovative business ideas based on industry and target market
-- **Feasibility Assessment**: Evaluates business ideas using multiple criteria:
+- **Business Idea Generation**: Generate innovative business ideas based on industry and target market
+- **Feasibility Assessment**: Evaluate business ideas using multiple criteria:
   - Market trends and outlook
   - Risk level analysis
   - Market sentiment
-  - Investment requirements
+  - Ethical impact assessment
+  - Complexity evaluation
   - Competition analysis
   - Scalability potential
-- **Market Analysis**: Integrates real-time financial data and news sentiment
-- **Custom Idea Assessment**: Allows users to input and evaluate their own business ideas
-- **Comprehensive Scoring**: Provides detailed feasibility scores and market insights
+- **Comprehensive Scoring**: Get detailed scores and insights for each business idea
+- **Market Analysis**: Real-time market data and sentiment analysis using financial APIs
 
-## Technical Stack
+## Installation
 
-- Python
-- OpenAI GPT-3.5 API
-- Yahoo Finance API
-- News API
-- TextBlob for sentiment analysis
-- Pandas and NumPy for data analysis
-- Scikit-learn for data normalization
+1. Clone the repository:
+```bash
+git clone https://github.com/yourusername/business-idea-analyzer.git
+cd business-idea-analyzer
+```
 
-## Requirements
+2. Create and activate a virtual environment:
+```bash
+python -m venv venv
+source venv/bin/activate  # On Windows: venv\Scripts\activate
+```
 
-- Python 3.x
-- OpenAI API key
-- News API key
-- Required Python packages (see requirements.txt)
+3. Install the package:
+```bash
+pip install -e .
+```
 
-## Getting Started
+4. Set up environment variables:
+   - Copy `.env.example` to `.env`
+   - Add your API keys to the `.env` file:
+     ```
+     OPENAI_API_KEY=your_openai_api_key_here
+     NEWS_API_KEY=your_news_api_key_here
+     ```
 
-1. Clone the repository
-2. Install required packages
-3. Set up your environment variables (OPENAI_API_KEY and NEWS_API_KEY)
-4. Run the script to generate or assess business ideas
+## Usage
 
-## Usage Example
+### Basic Usage
 
 ```python
-advisor = BusinessAdvisor()
+from business_idea_analyzer import BusinessIdeaGenerator
+
+# Initialize the generator
+generator = BusinessIdeaGenerator()
 
 # Generate business ideas
-recommendations = advisor.get_business_recommendations(
+ideas = generator.generate_ideas(
     industry="technology",
-    target_market="small businesses",
-    investment_budget=50000,
-    target_roi=0.25
+    target_market="small businesses"
 )
 
-# Assess your own business idea
-assessment = advisor.assess_user_idea(
-    idea="Your business idea here",
-    industry="your industry",
-    investment_budget=your_budget,
-    target_roi=your_target_roi
+# Assess a specific idea
+assessment = generator.assess_feasibility(
+    idea="A sustainable mobile app for managing finances",
+    initial_investment=50000,
+    target_roi=200
 )
+
+# Print results
+print(f"Feasibility Score: {assessment['score']:.2f}")
+print(f"Market Outlook: {assessment['market_outlook']}")
+print(f"Risk Level: {assessment['risk_level']}")
+print(f"Market Sentiment: {assessment['sentiment']}")
 ```
+
+### Running the Demo
+
+```bash
+python src/main.py
+```
+
+This will run the demo script that:
+1. Tests assessment of a bad idea
+2. Tests assessment of a good idea
+3. Generates and assesses new business ideas
+
+## Project Structure
+
+```
+business-idea-analyzer/
+├── src/
+│   ├── __init__.py
+│   ├── business_generator.py
+│   ├── business_advisor.py
+│   └── main.py
+├── tests/
+├── .env.example
+├── .gitignore
+├── LICENSE
+├── README.md
+├── requirements.txt
+└── setup.py
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
 ## License
 
-MIT License
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+
+## Acknowledgments
+
+- OpenAI for providing the GPT-3.5 API
+- Yahoo Finance for market data
+- News API for sentiment analysis
+- TextBlob for natural language processing 
