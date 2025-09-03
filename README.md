@@ -1,122 +1,87 @@
-# Business Idea Analyzer & Generator
+# 💡 Business Idea Analyzer & Generator — Gradio Demo
 
-An AI-powered tool that helps entrepreneurs evaluate and generate business ideas using market analysis, sentiment analysis, and feasibility assessment.
+[![Python 3.10+](https://img.shields.io/badge/python-3.10%2B-informational.svg)](#)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+<!-- Replace USER/SPACE with your actual Space to activate this badge -->
+[![Open in 🤗 Spaces](https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue)](https://huggingface.co/spaces/USER/SPACE)
 
-## Features
+Generate business ideas and assess feasibility via a simple Gradio UI.  
+The app tries to import your project's `BusinessIdeaGenerator` and gracefully falls back to a lightweight stub if imports fail, so the demo always runs.
 
-- **Business Idea Generation**: Generate innovative business ideas based on industry and target market
-- **Feasibility Assessment**: Evaluate business ideas using multiple criteria:
-  - Market trends and outlook
-  - Risk level analysis
-  - Market sentiment
-  - Ethical impact assessment
-  - Complexity evaluation
-  - Competition analysis
-  - Scalability potential
-- **Comprehensive Scoring**: Get detailed scores and insights for each business idea
-- **Market Analysis**: Real-time market data and sentiment analysis using financial APIs
+---
 
-## Installation
+## ✨ Features
+- **Generate Ideas**: industry + target market → ranked ideas with optional scores/rationale.
+- **Assess Idea**: feasibility summary + raw JSON output.
+- **Batch Assess (CSV)**: upload ideas to score at once and download a results file.
+- **Environment-ready**: reads `.env` locally and **HF Spaces Variables** in production.
 
-1. Clone the repository:
-```bash
-git clone https://github.com/yourusername/business-idea-analyzer.git
-cd business-idea-analyzer
+---
+
+## 🖥️ Quickstart (Windows)
+
+```cmd
+py -m venv .venv
+.venv\Scripts\activate
+py -m pip install -r requirements.txt
+py app.py
+```
+Open the printed local URL.  
+**Temporary public link**: edit the bottom of `app.py` to use `demo.launch(share=True)`.
+
+---
+
+## 🚀 Deploy to Hugging Face Spaces
+
+1. Create a new Space → **SDK = Gradio**.
+2. Upload `app.py` and `requirements.txt` (README optional).
+3. Go to **Settings → Variables** and add any secrets your code uses (e.g., `OPENAI_API_KEY`, `NEWS_API_KEY`).
+4. Click **Restart this Space** if needed.
+
+**Badge:** After your Space exists, replace `USER/SPACE` in the badge at the top of this README with your handle:
+
+```md
+[![Open in 🤗 Spaces](https://img.shields.io/badge/%F0%9F%A4%97-Open%20in%20Spaces-blue)](https://huggingface.co/spaces/<your-username>/<your-space-name>)
 ```
 
-2. Create and activate a virtual environment:
-```bash
-python -m venv venv
-source venv/bin/activate  # On Windows: venv\Scripts\activate
+---
+
+## 📦 Batch CSV format
+Upload a CSV with columns:
+```
+idea[, initial_investment, target_roi, industry, target_market]
+```
+A sample file `business_batch_sample.csv` is included.
+
+---
+
+## 🔌 Environment variables
+- Put secrets in a local `.env` (gitignored) or in HF Spaces → Settings → Variables.
+- See `.env.example` for names used by typical integrations.
+
+---
+
+## 🧩 Project structure
+```
+.
+├─ app.py
+├─ requirements.txt
+├─ README.md
+├─ .env.example
+├─ business_batch_sample.csv
+├─ LICENSE
+├─ .gitignore
+└─ (your project modules providing BusinessIdeaGenerator)
 ```
 
-3. Install the package:
-```bash
-pip install -e .
-```
+---
 
-4. Set up environment variables:
-   - Copy `.env.example` to `.env`
-   - Add your API keys to the `.env` file:
-     ```
-     OPENAI_API_KEY=your_openai_api_key_here
-     NEWS_API_KEY=your_news_api_key_here
-     ```
+## 📝 Notes
+- The UI first tries: `from business_idea_analyzer import BusinessIdeaGenerator` then `from business_generator import BusinessIdeaGenerator`.
+- If signatures differ, the code retries calls without optional args so variants still work.
+- For production, prefer a fixed package layout and pinned versions.
 
-## Usage
+---
 
-### Basic Usage
-
-```python
-from business_idea_analyzer import BusinessIdeaGenerator
-
-# Initialize the generator
-generator = BusinessIdeaGenerator()
-
-# Generate business ideas
-ideas = generator.generate_ideas(
-    industry="technology",
-    target_market="small businesses"
-)
-
-# Assess a specific idea
-assessment = generator.assess_feasibility(
-    idea="A sustainable mobile app for managing finances",
-    initial_investment=50000,
-    target_roi=200
-)
-
-# Print results
-print(f"Feasibility Score: {assessment['score']:.2f}")
-print(f"Market Outlook: {assessment['market_outlook']}")
-print(f"Risk Level: {assessment['risk_level']}")
-print(f"Market Sentiment: {assessment['sentiment']}")
-```
-
-### Running the Demo
-
-```bash
-python src/main.py
-```
-
-This will run the demo script that:
-1. Tests assessment of a bad idea
-2. Tests assessment of a good idea
-3. Generates and assesses new business ideas
-
-## Project Structure
-
-```
-business-idea-analyzer/
-├── src/
-│   ├── __init__.py
-│   ├── business_generator.py
-│   ├── business_advisor.py
-│   └── main.py
-├── tests/
-├── .env.example
-├── .gitignore
-├── LICENSE
-├── README.md
-├── requirements.txt
-└── setup.py
-```
-
-## Contributing
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add some amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
-
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- OpenAI for providing the GPT-3.5 API
-- Yahoo Finance for market data
-- News API for sentiment analysis
-- TextBlob for natural language processing 
+## ⚖️ License
+[MIT](./LICENSE)
